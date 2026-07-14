@@ -1,0 +1,885 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ANØMALY | Colección Oscura</title>
+    <!-- CDN de Font Awesome para los Logos e Iconos -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* ============================== */
+        /* Estilos Generales - Paleta Oscura con Degradados */
+        /* ============================== */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Inter', 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+        }
+
+        body {
+            background: radial-gradient(circle at center, #1a1a1a 0%, #0f0f0f 100%);
+            color: #e0e0e0;
+            overflow-x: hidden;
+            min-height: 100vh;
+        }
+
+        /* ============================== */
+        /* Encabezado (Header) */
+        /* ============================== */
+        header {
+            background: linear-gradient(180deg, #000000 0%, #151515 100%);
+            padding: 30px 20px;
+            text-align: center;
+            border-bottom: 1px solid #2a2a2a;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.5);
+        }
+
+        header h1 {
+            margin-bottom: 20px;
+            font-size: 2.8rem;
+            letter-spacing: 4px;
+            font-weight: 800;
+            color: #ffffff;
+            text-transform: uppercase;
+            text-shadow: 0 2px 10px rgba(255,255,255,0.1);
+        }
+
+        /* ============================== */
+        /* Botones de Categoría (Filtros) */
+        /* ============================== */
+        .categorias-nav {
+            display: flex;
+            justify-content: center;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        .btn-categoria {
+            background: linear-gradient(135deg, #1e1e1e 0%, #141414 100%);
+            color: #b0b0b0;
+            border: 1px solid #333;
+            padding: 12px 24px;
+            font-size: 0.95rem;
+            font-weight: 500;
+            cursor: pointer;
+            border-radius: 4px;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .btn-categoria:hover {
+            background: linear-gradient(135deg, #2a2a2a 0%, #1e1e1e 100%);
+            color: #ffffff;
+            border-color: #555;
+        }
+
+        .btn-categoria.activo {
+            background: linear-gradient(135deg, #ffffff 0%, #e0e0e0 100%);
+            color: #000000;
+            border-color: #ffffff;
+            font-weight: 700;
+            box-shadow: 0 4px 15px rgba(255,255,255,0.15);
+        }
+
+        /* ============================== */
+        /* Sección de Información Principal (Inicio) */
+        /* ============================== */
+        .info-principal-container {
+            background: linear-gradient(135deg, #1e1e1e 0%, #151515 100%);
+            border: 1px solid #2a2a2a;
+            border-radius: 6px;
+            padding: 40px;
+            margin-bottom: 30px;
+            display: block;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        }
+
+        .info-principal-container h2 {
+            font-size: 2rem;
+            color: #ffffff;
+            margin-bottom: 25px;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            border-bottom: 1px solid #333;
+            padding-bottom: 15px;
+        }
+
+        .info-principal-container p {
+            font-size: 1.05rem;
+            color: #b0b0b0;
+            line-height: 1.8;
+            margin-bottom: 20px;
+        }
+
+        .redes-container {
+            margin-top: 25px;
+            padding-top: 25px;
+            border-top: 1px solid #333;
+        }
+
+        .redes-container h3 {
+            font-size: 1.1rem;
+            color: #ffffff;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 15px;
+        }
+
+        .redes-flex {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        .btn-red-social {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, #121212 0%, #000000 100%);
+            color: #ffffff;
+            border: 1px solid #444;
+            padding: 12px 24px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            text-decoration: none;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            border-radius: 4px;
+            transition: all 0.3s ease;
+            gap: 10px;
+        }
+
+        .btn-red-social:hover {
+            background: linear-gradient(135deg, #ffffff 0%, #e0e0e0 100%);
+            color: #000000;
+            border-color: #ffffff;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(255,255,255,0.1);
+        }
+
+        /* ============================== */
+        /* Layout Principal */
+        /* ============================== */
+        .layout-principal {
+            max-width: 1400px;
+            margin: 50px auto;
+            padding: 0 20px;
+        }
+
+        .tienda-container {
+            display: none; 
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+        }
+
+        .producto-card {
+            background: linear-gradient(135deg, #1e1e1e 0%, #131313 100%);
+            border-radius: 6px;
+            overflow: hidden;
+            border: 1px solid #2a2a2a;
+            transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.3s ease, border-color 0.3s ease;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .producto-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(0,0,0,0.6);
+            border-color: #444;
+        }
+
+        .producto-imagen {
+            width: 100%;
+            height: 350px;
+            background: radial-gradient(circle, #2a2a2a 0%, #1a1a1a 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+
+        .producto-imagen img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .producto-card:hover .producto-imagen img {
+            transform: scale(1.03);
+        }
+
+        .producto-info {
+            padding: 25px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            flex-grow: 1;
+        }
+
+        .producto-titulo {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: #ffffff;
+        }
+
+        .producto-precio {
+            font-size: 1.3rem;
+            color: #ffffff;
+            font-weight: 700;
+            margin-bottom: 5px;
+        }
+
+        /* ============================== */
+        /* Controles de Acción en Tarjeta */
+        /* ============================== */
+        .acciones-producto {
+            display: flex;
+            gap: 10px;
+            margin-top: auto;
+            align-items: center;
+        }
+
+        /* Selector de cantidad fijo */
+        .selector-cantidad-previo {
+            flex: 1;
+            height: 45px;
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            background: linear-gradient(135deg, #252525 0%, #1a1a1a 100%);
+            border: 1px solid #444;
+            border-radius: 4px;
+            overflow: hidden;
+            align-items: center;
+        }
+
+        .selector-cantidad-previo button {
+            background: none;
+            border: none;
+            color: #ffffff;
+            font-size: 1.1rem;
+            font-weight: bold;
+            height: 100%;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .selector-cantidad-previo button:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .selector-cantidad-previo .valor-cantidad {
+            color: #ffffff;
+            text-align: center;
+            font-weight: 700;
+            font-size: 1rem;
+        }
+
+        /* Botón Añadir */
+        .btn-anadir-carrito {
+            flex: 1.5;
+            height: 45px;
+            background: linear-gradient(135deg, #ffffff 0%, #e0e0e0 100%);
+            color: #000000;
+            border: 1px solid #ffffff;
+            font-weight: 700;
+            cursor: pointer;
+            border-radius: 4px;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            font-size: 0.85rem;
+            letter-spacing: 1px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+        }
+
+        .btn-anadir-carrito:hover {
+            background: linear-gradient(135deg, #e0e0e0 0%, #cccccc 100%);
+            border-color: #cccccc;
+            box-shadow: 0 4px 12px rgba(255,255,255,0.1);
+        }
+
+        /* ============================== */
+        /* Botón Flotante Lateral del Carrito */
+        /* ============================== */
+        .btn-carrito-flotante {
+            position: fixed;
+            right: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            background: linear-gradient(135deg, #ffffff 0%, #e0e0e0 100%);
+            color: #000000;
+            padding: 18px 14px;
+            border-radius: 8px 0 0 8px;
+            border: none;
+            cursor: pointer;
+            z-index: 999;
+            box-shadow: -4px 0 20px rgba(0,0,0,0.6);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .btn-carrito-flotante:hover {
+            padding-right: 22px;
+            background: linear-gradient(135deg, #e0e0e0 0%, #cccccc 100%);
+        }
+
+        .btn-carrito-flotante i {
+            font-size: 1.4rem;
+        }
+
+        .contador-carrito {
+            background: linear-gradient(135deg, #ff4444 0%, #cc0000 100%);
+            color: #ffffff;
+            font-size: 0.75rem;
+            font-weight: bold;
+            padding: 3px 7px;
+            border-radius: 10px;
+            min-width: 20px;
+            text-align: center;
+            box-shadow: 0 2px 5px rgba(255,0,0,0.3);
+        }
+
+        /* ============================== */
+        /* Panel Lateral Desplegable del Carrito */
+        /* ============================== */
+        .panel-carrito {
+            position: fixed;
+            top: 0;
+            right: -400px; 
+            width: 380px;
+            max-width: 100%;
+            height: 100%;
+            background: linear-gradient(180deg, #1e1e1e 0%, #121212 100%);
+            border-left: 1px solid #2a2a2a;
+            box-shadow: -10px 0 40px rgba(0,0,0,0.8);
+            z-index: 1000;
+            transition: right 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            display: flex;
+            flex-direction: column;
+            padding: 25px;
+        }
+
+        .panel-carrito.abierto {
+            right: 0;
+        }
+
+        .panel-carrito-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid #333;
+            padding-bottom: 15px;
+            margin-bottom: 20px;
+        }
+
+        .panel-carrito-header h2 {
+            font-size: 1.2rem;
+            color: #ffffff;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .btn-cerrar-panel {
+            background: none;
+            border: none;
+            color: #777;
+            font-size: 1.5rem;
+            cursor: pointer;
+            transition: color 0.2s;
+        }
+
+        .btn-cerrar-panel:hover {
+            color: #fff;
+        }
+
+        .lista-carrito {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            flex-grow: 1;
+            overflow-y: auto;
+            padding-right: 5px;
+            margin-bottom: 15px;
+        }
+
+        .item-carrito {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: linear-gradient(135deg, #141414 0%, #0d0d0d 100%);
+            padding: 12px;
+            border: 1px solid #2a2a2a;
+            border-radius: 4px;
+            font-size: 0.85rem;
+        }
+
+        .item-carrito-info {
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+        }
+
+        .btn-eliminar-item {
+            background: none;
+            border: none;
+            color: #ff4444;
+            cursor: pointer;
+            font-size: 1rem;
+            padding: 5px;
+            transition: transform 0.2s;
+        }
+
+        .btn-eliminar-item:hover {
+            transform: scale(1.1);
+        }
+
+        .carrito-vacio-txt {
+            color: #555;
+            text-align: center;
+            font-size: 0.9rem;
+            padding: 40px 0;
+        }
+
+        .total-carrito {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: #ffffff;
+            display: flex;
+            justify-content: space-between;
+            border-top: 1px solid #333;
+            padding-top: 15px;
+            margin-bottom: 15px;
+        }
+
+        .form-checkout {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            border-top: 1px solid #333;
+            padding-top: 15px;
+            background: linear-gradient(135deg, #161616 0%, #101010 100%);
+            padding: 15px;
+            border-radius: 4px;
+            border: 1px solid #252525;
+        }
+
+        .grupo-campo {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+        }
+
+        .grupo-campo label {
+            font-size: 0.75rem;
+            color: #b0b0b0;
+            text-transform: uppercase;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+        }
+
+        .grupo-campo input {
+            background-color: #0c0c0c;
+            border: 1px solid #333;
+            color: #ffffff;
+            padding: 10px;
+            font-size: 0.9rem;
+            border-radius: 4px;
+            transition: border-color 0.3s;
+        }
+
+        .grupo-campo input:focus {
+            outline: none;
+            border-color: #666;
+        }
+
+        .btn-finalizar-pedido {
+            background: linear-gradient(135deg, #25d366 0%, #1ebd58 100%);
+            color: #ffffff;
+            border: 1px solid #25d366;
+            padding: 14px;
+            font-weight: 700;
+            cursor: pointer;
+            border-radius: 4px;
+            text-transform: uppercase;
+            font-size: 0.85rem;
+            letter-spacing: 1px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            margin-top: 5px;
+            width: 100%;
+            box-shadow: 0 4px 15px rgba(37,211,102,0.2);
+            transition: all 0.3s ease;
+        }
+
+        .btn-finalizar-pedido:hover {
+            background: linear-gradient(135deg, #20ba5a 0%, #1a9f49 100%);
+            box-shadow: 0 6px 20px rgba(37,211,102,0.3);
+            transform: translateY(-1px);
+        }
+
+        .overlay-fondo {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.7);
+            z-index: 998;
+            display: none;
+            backdrop-filter: blur(2px);
+        }
+
+        footer {
+            text-align: center;
+            padding: 40px 20px;
+            background: linear-gradient(180deg, #0a0a0a 0%, #000000 100%);
+            color: #555;
+            margin-top: 80px;
+            border-top: 1px solid #222;
+            font-size: 0.9rem;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>ANØMALY</h1>
+        <nav class="categorias-nav">
+            <button class="btn-categoria activo" onclick="filtrar('inicio', event)">Inicio</button>
+            <button class="btn-categoria" onclick="filtrar('todos', event)">Todos los Productos</button>
+            <button class="btn-categoria" onclick="filtrar('camisas', event)">Camisas</button>
+            <button class="btn-categoria" onclick="filtrar('pantalones', event)">Pantalones</button>
+            <button class="btn-categoria" onclick="filtrar('chaquetas', event)">Chaquetas</button>
+        </nav>
+    </header>
+
+    <button class="btn-carrito-flotante" onclick="togglePanelCarrito(true)">
+        <i class="fas fa-shopping-cart"></i>
+        <span class="contador-carrito" id="contadorCarrito">0</span>
+    </button>
+
+    <div class="overlay-fondo" id="overlayFondo" onclick="togglePanelCarrito(false)"></div>
+
+    <aside class="panel-carrito" id="panelCarrito">
+        <div class="panel-carrito-header">
+            <h2>Tu Compra</h2>
+            <button class="btn-cerrar-panel" onclick="togglePanelCarrito(false)">&times;</button>
+        </div>
+        
+        <div class="lista-carrito" id="listaCarrito">
+            <p class="carrito-vacio-txt">Tu carrito está vacío.</p>
+        </div>
+
+        <div class="total-carrito">
+            <span>Total:</span>
+            <span id="totalMonto">$0.00</span>
+        </div>
+
+        <div class="form-checkout">
+            <div class="grupo-campo">
+                <label for="checkNombre">Nombre Completo</label>
+                <input type="text" id="checkNombre" placeholder="Tu Nombre" required>
+            </div>
+            <div class="grupo-campo">
+                <label for="checkCedula">Cédula de Identidad</label>
+                <input type="text" id="checkCedula" placeholder="Tu Cédula" required>
+            </div>
+            
+            <button class="btn-finalizar-pedido" onclick="enviarCarritoWhatsApp()">
+                <i class="fab fa-whatsapp"></i> Finalizar por WhatsApp
+            </button>
+        </div>
+    </aside>
+
+    <div class="layout-principal">
+        <div class="contenido-izquierdo">
+            
+            <section class="info-principal-container" id="infoPrincipal">
+                <h2>Bienvenidos a la Anomalía Urbana</h2>
+                <p>Párrafo 1: Introducción de la marca sobre tendencias vanguardistas y ropa urbana monocromática.</p>
+                <p>Párrafo 2: Detalles técnicos de calidad textil y manufactura duradera.</p>
+                <p>Párrafo 3: Explora las colecciones, ajusta las unidades deseadas y procesa tu orden directa.</p>
+
+                <div class="redes-container">
+                    <h3>Sintoniza con nosotros</h3>
+                    <div class="redes-flex">
+                        <a href="https://instagram.com/tu_usuario" target="_blank" class="btn-red-social"><i class="fab fa-instagram"></i> Instagram</a>
+                        <a href="https://wa.me/584120743357" target="_blank" class="btn-red-social"><i class="fab fa-whatsapp"></i> WhatsApp</a>
+                    </div>
+                </div>
+            </section>
+
+            <!-- CONTENEDOR TIENDA -->
+            <main class="tienda-container" id="tiendaContainer">
+                
+                <!-- Producto 1 -->
+                <div class="producto-card" data-id="p1" data-categoria="camisas">
+                    <div class="producto-imagen">
+                        <img src="imagenes/camisa-lino-black.jpg" alt="Camisa Lino Premium Onyx">
+                    </div>
+                    <div class="producto-info">
+                        <p class="producto-titulo">Camisa Lino Premium Onyx</p>
+                        <p class="producto-precio">$35.00</p>
+                        <div class="acciones-producto">
+                            
+                            <!-- Control Selector de Unidades Previo -->
+                            <div class="selector-cantidad-previo">
+                                <button onclick="modificarContadorPrevio('p1', -1)">-</button>
+                                <span class="valor-cantidad" id="cant-previo-p1">1</span>
+                                <button onclick="modificarContadorPrevio('p1', 1)">+</button>
+                            </div>
+
+                            <!-- Botón Procesar Añadir -->
+                            <button class="btn-anadir-carrito" onclick="procesarAlCarrito('p1', 'Camisa Lino Premium Onyx', 35.00)">
+                                <i class="fas fa-plus"></i> Añadir
+                            </button>
+
+                        </div>
+                    </div>
+                </div>
+                
+
+                <!-- Producto 2 -->
+                <div class="producto-card" data-id="p2" data-categoria="camisas">
+                    <div class="producto-imagen">
+                        <img src="imagenes/camisa-lino-black2.jpg.png" alt="Camisa Lino Premium Onyx 2">
+                    </div>
+                    <div class="producto-info">
+                        <p class="producto-titulo">Camisa Lino Premium Onyx 2</p>
+                        <p class="producto-precio">$35.00</p>
+                        <div class="acciones-producto">
+                            
+                            <!-- Control Selector de Unidades Previo -->
+                            <div class="selector-cantidad-previo">
+                                <button onclick="modificarContadorPrevio('p2', -1)">-</button>
+                                <span class="valor-cantidad" id="cant-previo-p2">1</span>
+                                <button onclick="modificarContadorPrevio('p2', 1)">+</button>
+                            </div>
+
+                            <!-- Botón Procesar Añadir -->
+                            <button class="btn-anadir-carrito" onclick="procesarAlCarrito('p2', 'Camisa Lino Premium Onyx 2', 35.00)">
+                                <i class="fas fa-plus"></i> Añadir
+                            </button>
+
+                        </div>
+                    </div>
+                </div>        
+                
+
+                <!-- Producto 3 -->
+                <div class="producto-card" data-id="p3" data-categoria="pantalones">
+                    <div class="producto-imagen">
+                        <img src="imagenes/jean-slim-dark.jpg" alt="Jean Slim Fit Charcoal">
+                    </div>
+                    <div class="producto-info">
+                        <p class="producto-titulo">Jean Slim Fit Charcoal</p>
+                        <p class="producto-precio">$45.00</p>
+                        <div class="acciones-producto">
+                            
+                            <!-- Control Selector de Unidades Previo -->
+                            <div class="selector-cantidad-previo">
+                                <button onclick="modificarContadorPrevio('p3', -1)">-</button>
+                                <span class="valor-cantidad" id="cant-previo-p3">1</span>
+                                <button onclick="modificarContadorPrevio('p3', 1)">+</button>
+                            </div>
+
+                            <!-- Botón Procesar Añadir -->
+                            <button class="btn-anadir-carrito" onclick="procesarAlCarrito('p3', 'Jean Slim Fit Charcoal', 45.00)">
+                                <i class="fas fa-plus"></i> Añadir
+                            </button>
+
+                        </div>
+                    </div>
+                </div>
+
+            </main>
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; 2026 ANØMALY - Black Collection. Todos los derechos reservados.</p>
+    </footer>
+
+    <script>
+        let carrito = [];
+        
+        const infoPrincipal = document.getElementById('infoPrincipal');
+        const tiendaContainer = document.getElementById('tiendaContainer');
+        const panelCarrito = document.getElementById('panelCarrito');
+        const overlayFondo = document.getElementById('overlayFondo');
+
+        window.addEventListener('DOMContentLoaded', () => {
+            if(localStorage.getItem('nombreUsuario')) {
+                document.getElementById('checkNombre').value = localStorage.getItem('nombreUsuario');
+            }
+            if(localStorage.getItem('cedulaUsuario')) {
+                document.getElementById('checkCedula').value = localStorage.getItem('cedulaUsuario');
+            }
+        });
+
+        function togglePanelCarrito(abrir) {
+            if (abrir) {
+                panelCarrito.classList.add('abierto');
+                overlayFondo.style.display = 'block';
+            } else {
+                panelCarrito.classList.remove('abierto');
+                overlayFondo.style.display = 'none';
+            }
+        }
+
+        function filtrar(categoria, event) {
+            const botones = document.querySelectorAll('.btn-categoria');
+            botones.forEach(btn => btn.classList.remove('activo'));
+            if (event) event.currentTarget.classList.add('activo');
+            
+            if (categoria === 'inicio') {
+                infoPrincipal.style.display = 'block';
+                tiendaContainer.style.display = 'none';
+            } else {
+                infoPrincipal.style.display = 'none';
+                tiendaContainer.style.display = 'grid';
+                
+                const productos = document.querySelectorAll('.producto-card');
+                productos.forEach(p => {
+                    const cat = p.getAttribute('data-categoria');
+                    p.style.display = (categoria === 'todos' || cat === categoria) ? 'flex' : 'none';
+                });
+            }
+        }
+
+        function modificarContadorPrevio(id, cambio) {
+            const txtCant = document.getElementById(`cant-previo-${id}`);
+            if (!txtCant) return;
+
+            let cantidadActual = parseInt(txtCant.textContent);
+            cantidadActual += cambio;
+
+            if (cantidadActual < 1) cantidadActual = 1;
+            txtCant.textContent = cantidadActual;
+        }
+
+        function procesarAlCarrito(id, ExtNombre, precio) {
+            const txtCant = document.getElementById(`cant-previo-${id}`);
+            const unidadesAAnadir = txtCant ? parseInt(txtCant.textContent) : 1;
+
+            const itemExistente = carrito.find(item => item.id === id);
+
+            if (itemExistente) {
+                itemExistente.cantidad += unidadesAAnadir;
+            } else {
+                carrito.push({ id: id, nombre: ExtNombre, precio: precio, cantidad: unidadesAAnadir });
+            }
+
+            if(txtCant) txtCant.textContent = 1;
+
+            actualizarInterfazCarrito();
+            togglePanelCarrito(true);
+        }
+
+        function eliminarDelCarrito(id) {
+            carrito = carrito.filter(item => item.id !== id);
+            actualizarInterfazCarrito();
+        }
+
+        function actualizarInterfazCarrito() {
+            const listaCarrito = document.getElementById('listaCarrito');
+            const totalMonto = document.getElementById('totalMonto');
+            const contadorCarrito = document.getElementById('contadorCarrito');
+            
+            listaCarrito.innerHTML = "";
+
+            let totalUnidades = carrito.reduce((acum, item) => acum + item.cantidad, 0);
+            contadorCarrito.textContent = totalUnidades;
+
+            if (carrito.length === 0) {
+                listaCarrito.innerHTML = `<p class="carrito-vacio-txt">Tu carrito está vacío.</p>`;
+                totalMonto.textContent = "$0.00";
+                return;
+            }
+
+            let totalAcumulado = 0;
+
+            carrito.forEach(item => {
+                const subtotal = item.precio * item.cantidad;
+                totalAcumulado += subtotal;
+
+                const itemDiv = document.createElement('div');
+                itemDiv.className = 'item-carrito';
+                itemDiv.innerHTML = `
+                    <div class="item-carrito-info">
+                        <strong>${item.nombre}</strong>
+                        <span>${item.cantidad}x - $${subtotal.toFixed(2)}</span>
+                    </div>
+                    <button class="btn-eliminar-item" onclick="eliminarDelCarrito('${item.id}')">
+                        <i class="fas fa-trash-alt"></i>
+                    </button>
+                `;
+                listaCarrito.appendChild(itemDiv);
+            });
+
+            totalMonto.textContent = `$${totalAcumulado.toFixed(2)}`;
+        }
+
+        /* ======================================= */
+        /* PROCESAMIENTO Y LIMPIEZA DE PEDIDO      */
+        /* ======================================= */
+        function enviarCarritoWhatsApp() {
+            const nombre = document.getElementById('checkNombre').value.trim();
+            const cedula = document.getElementById('checkCedula').value.trim();
+
+            if (carrito.length === 0) {
+                alert("El carrito está vacío. Agrega productos antes de enviar.");
+                return;
+            }
+
+            if (nombre === "" || cedula === "") {
+                alert("Por favor, ingresa tu Nombre y Cédula para poder procesar la orden.");
+                return;
+            }
+
+            localStorage.setItem('nombreUsuario', nombre);
+            localStorage.setItem('cedulaUsuario', cedula);
+
+            const numeroTelefono = "584120743357";
+            
+            let mensajeWhatsApp = `*NUEVA ORDEN DE COMPRA - ANØMALY*\n\n`;
+            mensajeWhatsApp += `*Cliente:* ${nombre}\n`;
+            mensajeWhatsApp += `*Cédula:* ${cedula}\n\n`;
+            mensajeWhatsApp += `*Artículos en el Carrito:*\n`;
+
+            let totalOrden = 0;
+            carrito.forEach((item, index) => {
+                const subtotal = item.precio * item.cantidad;
+                totalOrden += subtotal;
+                mensajeWhatsApp += `${index + 1}. _${item.nombre}_ \n`;
+                mensajeWhatsApp += `   Cant: ${item.cantidad} | Subtotal: $${subtotal.toFixed(2)}\n`;
+            });
+
+            mensajeWhatsApp += `\n*TOTAL NETO A PAGAR:* $${totalOrden.toFixed(2)}\n\n`;
+            mensajeWhatsApp += `Quedo a la espera de sus datos bancarios y formas de despacho.`;
+
+            // 1. Abrir la pestaña de WhatsApp con la información recopilada
+            window.open(`https://wa.me/${numeroTelefono}?text=${encodeURIComponent(mensajeWhatsApp)}`, '_blank');
+
+            // 2. MODIFICACIÓN: Resetear el array global del carrito de compras
+            carrito = [];
+
+            // 3. Re-renderizar la interfaz para limpiar listas y contadores visuales
+            actualizarInterfazCarrito();
+
+            // 4. Cerrar el panel lateral
+            togglePanelCarrito(false);
+        }
+    </script>
+</body>
+</html>
