@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ANØMALY | Tienda de Ropa</title>
+    <title>ANØMALY</title>
     <!-- CDN de Font Awesome para los Logos e Iconos -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
@@ -140,7 +140,7 @@
         }
 
         /* ============================== */
-        /* Sección de Información Principal (Inicio) */
+        /* Layout de la Sección de Inicio (Dos Columnas) */
         /* ============================== */
         .info-principal-container {
             background: linear-gradient(135deg, #1e1e1e 0%, #151515 100%);
@@ -151,12 +151,13 @@
             box-shadow: 0 10px 30px rgba(0,0,0,0.3);
         }
 
-        .inicio-flex-layout {
-            display: flex;
-            flex-direction: column;
-            gap: 30px;
+        .inicio-grid-layout {
+            display: grid;
+            grid-template-columns: 1.2fr 0.8fr;
+            gap: 40px;
         }
 
+        /* Columna Izquierda (Textos de la Tienda) */
         .texto-bienvenida h2 {
             font-size: 2rem;
             color: #ffffff;
@@ -220,8 +221,86 @@
             box-shadow: 0 5px 15px rgba(255,255,255,0.1);
         }
 
+        /* Columna Derecha (Preguntas Frecuentes - FAQ) */
+        .faq-container h2 {
+            font-size: 2rem;
+            color: #ffffff;
+            margin-bottom: 25px;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            border-bottom: 1px solid #333;
+            padding-bottom: 15px;
+        }
+
+        .faq-item {
+            border: 1px solid #2a2a2a;
+            border-radius: 4px;
+            margin-bottom: 12px;
+            background: rgba(0, 0, 0, 0.2);
+            overflow: hidden;
+        }
+
+        .faq-header {
+            width: 100%;
+            background: none;
+            border: none;
+            color: #ffffff;
+            padding: 16px 20px;
+            text-align: left;
+            font-size: 0.95rem;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: background 0.3s;
+        }
+
+        .faq-header:hover {
+            background: rgba(255, 255, 255, 0.03);
+        }
+
+        .faq-header i {
+            font-size: 0.8rem;
+            transition: transform 0.3s ease;
+            color: #b0b0b0;
+        }
+
+        .faq-item.abierto .faq-header i {
+            transform: rotate(180deg);
+            color: #ffffff;
+        }
+
+        .faq-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s cubic-bezier(0, 1, 0, 1);
+            background: rgba(0, 0, 0, 0.4);
+        }
+
+        .faq-item.abierto .faq-content {
+            max-height: 1000px;
+            transition: max-height 0.3s cubic-bezier(1, 0, 1, 0);
+        }
+
+        .faq-content p {
+            padding: 20px;
+            font-size: 0.95rem;
+            color: #b0b0b0;
+            line-height: 1.6;
+            border-top: 1px solid #202020;
+        }
+
+        /* Responsive para la sección de Inicio */
+        @media (max-width: 992px) {
+            .inicio-grid-layout {
+                grid-template-columns: 1fr;
+                gap: 50px;
+            }
+        }
+
         /* ============================== */
-        /* Layout Principal */
+        /* Layout Principal de Tienda */
         /* ============================== */
         .layout-principal {
             max-width: 1400px;
@@ -647,9 +726,6 @@
 </head>
 <body>
 
-    <!-- ============================================== -->
-    <!-- CONTENIDO DE LA TIENDA (SIEMPRE ACCESIBLE) -->
-    <!-- ============================================== -->
     <div id="appContent">
         
         <header>
@@ -711,14 +787,15 @@
         <div class="layout-principal">
             <div class="contenido-izquierdo">
                 
-                <!-- Sección de Inicio -->
+                <!-- Sección de Inicio Modificada con Grid de Dos Columnas -->
                 <section class="info-principal-container" id="infoPrincipal">
-                    <div class="inicio-flex-layout">
+                    <div class="inicio-grid-layout">
                         
+                        <!-- Columna Izquierda: Identidad de Marca -->
                         <div class="texto-bienvenida">
                             <h2>Bienvenidos a ANØMALY</h2>
                             <p><strong>¿Quiénes somos?:</strong> Somos Anomaly, una tienda de ropa virtual donde la moda urbana se encuentra con la autenticidad. Nos enfocamos en romper con lo unconventional, ofreciendo piezas únicas y personalizadas que te permiten expresar tu verdadera identidad sin decir una sola palabra. Creemos que la ropa es una extensión de tu personalidad; por eso, nos alejamos de lo masivo para crear prendas con carácter, estilo y esa actitud callejera que te hace destacar. En Anomaly, no seguimos tendencias: te ayudamos a crear las tuyas.</p>
-                            <p><strong>Calidad y Manufactura:</strong> En Anomaly, el estilo urbano no compite con la resistencia. Nos tomamos muy en serio cada prenda que lleva nuestro nombre, asegurando detalles técnicos de calidad textil y manufactura duradera en todo nuestro catálogo. Desde la selección de algodones de alto gramaje y fibras premium hasta costuras reforzadas de alta densidad, cada pieza está diseñada para resistir el ritmo de la calle y el paso del tiempo. No solo te llevas un diseño único y personalizado, sino una prenda estructurada, cómoda y hecha para durar.</p>
+                            <p><strong>Calidad y Manufactura:</strong> En Anomaly, el estilo urbano no compite con la resistencia. Nos tomamos muy en serio cada prenda que lleva nuestro nombre, asegurando detalles técnicos de calidad textil y manufactura duradera en todo nuestro catálogo. Desde la selección de algodones de alto gramaje y fibras premium hasta costuras reforzadas de alta densidad, cada pieza está diseñada para resistir el ritmo de la calle y el paso del tiempo. No solo te llevas un design único y personalizado, sino una prenda estructurada, cómoda y hecha para durar.</p>
                             <p><strong>¿Cómo comprar?:</strong> Renovar tu armario con el estilo único de Anomaly es rápido y sencillo. En nuestra plataforma web tú tienes el control absoluto de tu estilo: explora las colecciones, ajusta las unidades deseadas y procesa tu orden directa en solo unos clics. Nosotros nos encargamos de preparar tus prendas urbanas y personalizadas para que te lleguen listas para romper el molde. ¡Haz tu pedido hoy y marca la diferencia en la calle!</p>
 
                             <div class="redes-container">
@@ -729,6 +806,62 @@
                                     <a href="https://www.tiktok.com/@anomaly.ve" target="_blank" class="btn-red-social"><i class="fab fa-tiktok"></i> Tiktok</a>
                                 </div>
                             </div>
+                        </div>
+
+                        <!-- Columna Derecha: Layout de Preguntas Frecuentes -->
+                        <div class="faq-container">
+                            <h2>Preguntas Frecuentes</h2>
+                            
+                            <div class="faq-item">
+                                <button class="faq-header" onclick="toggleFaq(this)">
+                                    ¿Hacen envíos a nivel nacional?
+                                    <i class="fas fa-chevron-down"></i>
+                                </button>
+                                <div class="faq-content">
+                                    <p>Sí, realizamos envíos a todo el país a través de las principales agencias de encomienda. El costo y el tiempo de entrega dependen de tu ubicación.</p>
+                                </div>
+                            </div>
+
+                            <div class="faq-item">
+                                <button class="faq-header" onclick="toggleFaq(this)">
+                                    ¿Cómo es el método de pago?
+                                    <i class="fas fa-chevron-down"></i>
+                                </button>
+                                <div class="faq-content">
+                                    <p>Una vez que armas tu carrito en la web y presionas el botón de WhatsApp, nos llegará el desglose de tu orden. Por ese mismo chat te enviaremos los datos para Pago Móvil, transferencias o divisas en efectivo si te encuentras en zona de entregas personales.</p>
+                                </div>
+                            </div>
+
+                            <div class="faq-item">
+                                <button class="faq-header" onclick="toggleFaq(this)">
+                                    ¿Puedo personalizar una prenda?
+                                    <div class="icon-holder"><i class="fas fa-chevron-down"></i></div>
+                                </button>
+                                <div class="faq-content">
+                                    <p>¡Claro! En Anomaly nos especializamos en prendas con carácter único. Puedes coordinar con nosotros por WhatsApp detalles específicos para estampados o ajustes especiales en las piezas que lo permitan.</p>
+                                </div>
+                            </div>
+
+                            <div class="faq-item">
+                                <button class="faq-header" onclick="toggleFaq(this)">
+                                    ¿Qué tipo de telas utilizan?
+                                    <i class="fas fa-chevron-down"></i>
+                                </button>
+                                <div class="faq-content">
+                                    <p>Utilizamos algodones de alto gramaje (Heavy Cotton) y fibras premium con costuras reforzadas de alta densidad. Priorizamos que cada prenda mantenga su estructura urbana, sea cómoda y altamente duradera.</p>
+                                </div>
+                            </div>
+
+                            <div class="faq-item">
+                                <button class="faq-header" onclick="toggleFaq(this)">
+                                    ¿Realizan devoluciones?
+                                    <i class="fas fa-chevron-down"></i>
+                                </button>
+                                <div class="faq-content">
+                                    <p>Una vez el producto ha sido entregado no realizamos devoluciones, al momento de realizar la entrega se verifica la calidad del producto.</p>
+                                </div>
+                            </div>
+
                         </div>
 
                     </div>
@@ -809,16 +942,16 @@
                     </div>        
                     
                     <!-- Producto 3 -->
-                    <div class="producto-card" data-id="p3" data-categoria="camisas">
+                    <div class="producto-card" data-id="p3" data-categoria="accesorios">
                         <div class="producto-imagen">
-                            <img src="imagenes/streetwear-mujer-2.png" 
-                                 data-hover="imagenes/streetwear-mujer.png" 
-                                 alt="Protect Yourself" 
+                            <img src="imagenes/jean-slim-dark.jpg" 
+                                 data-hover="imagenes/jean-slim-dark-hover.jpg" 
+                                 alt="Jeans Slim Dark" 
                                  class="img-dinamica">
                         </div>
                         <div class="producto-info">
-                            <p class="producto-titulo">Protect Yourself</p>
-                            <p class="producto-precio">$15.00</p>
+                            <p class="producto-titulo">Jeans Slim Dark</p>
+                            <p class="producto-precio">$20.00</p>
                             
                             <div class="selector-talla-container">
                                 <label for="talla-p3">Talla:</label>
@@ -837,7 +970,7 @@
                                     <span class="valor-cantidad" id="cant-previo-p3">1</span>
                                     <button onclick="modificarContadorPrevio('p3', 1)">+</button>
                                 </div>
-                                <button class="btn-anadir-carrito" onclick="procesarAlCarrito('p3', 'Protect Yourself', 15.00)">
+                                <button class="btn-anadir-carrito" onclick="procesarAlCarrito('p3', 'Jeans Slim Dark', 20.00)">
                                     <i class="fas fa-plus"></i> Añadir
                                 </button>
                             </div>
@@ -869,8 +1002,23 @@
         const txtDropdownSeleccionado = document.getElementById('txtDropdownSeleccionado');
 
         window.addEventListener('DOMContentLoaded', () => {
-            inicializarEfectoHover(); // Iniciar los triggers para el cambio de imágenes
+            inicializarEfectoHover(); 
         });
+
+        // --- SISTEMA DESPLEGABLE PARA LAS PREGUNTAS FRECUENTES ---
+        function toggleFaq(button) {
+            const itemActual = button.parentElement;
+            
+            // Cerrar otras preguntas abiertas para mantener el orden (opcional)
+            document.querySelectorAll('.faq-item').forEach(item => {
+                if (item !== itemActual) {
+                    item.classList.remove('abierto');
+                }
+            });
+
+            // Conmutar el estado del ítem clickeado
+            itemActual.classList.toggle('abierto');
+        }
 
         // --- FUNCIÓN PARA EL EFECTO DE HOVER DE LAS IMÁGENES ---
         function inicializarEfectoHover() {
@@ -882,7 +1030,7 @@
                 
                 if (imgHover) {
                     img.addEventListener('mouseenter', () => {
-                        img.style.opacity = '0'; // Efecto suave de transición
+                        img.style.opacity = '0'; 
                         setTimeout(() => {
                             img.src = imgHover;
                             img.style.opacity = '1';
@@ -900,8 +1048,7 @@
             });
         }
 
-        // --- SISTEMA DE TIENDA Y CARRITO (DE ANOMALY) ---
-
+        // --- SISTEMA DE TIENDA Y CARRITO ---
         window.addEventListener('click', (e) => {
             if (dropdownMenu && !dropdownMenu.contains(e.target)) {
                 dropdownMenu.classList.remove('abierto');
@@ -1067,18 +1214,14 @@
             const mensajeEncriptado = encodeURIComponent(mensaje);
             const urlWhatsApp = `https://wa.me/${numeroTelefono}?text=${mensajeEncriptado}`;
 
-            // Abre el enlace de WhatsApp
             window.open(urlWhatsApp, '_blank');
 
             // --- VACIAR EL CARRITO Y RESETEAR INTERFAZ ---
             carrito = [];
             actualizarInterfazCarrito();
             
-            // Limpia los campos del formulario
             document.getElementById('checkNombre').value = "";
             document.getElementById('checkCedula').value = "";
-
-            // Cierra el panel lateral del carrito
             togglePanelCarrito(false);
         }
     </script>
