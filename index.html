@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ANØMALY | Colección Oscura</title>
-    <!-- CDN de Font Awesome para los Logos e Iconos -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         /* ============================== */
@@ -233,8 +232,41 @@
         }
 
         /* ============================== */
-        /* Controles de Acción en Tarjeta */
+        /* Selectores de Talla y Cantidad */
         /* ============================== */
+        .selector-talla-container {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+            margin-bottom: 5px;
+        }
+
+        .selector-talla-container label {
+            font-size: 0.75rem;
+            color: #b0b0b0;
+            text-transform: uppercase;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+        }
+
+        .select-talla {
+            background: #151515;
+            color: #ffffff;
+            border: 1px solid #444;
+            padding: 10px;
+            border-radius: 4px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            outline: none;
+            cursor: pointer;
+            transition: border-color 0.3s;
+            width: 100%;
+        }
+
+        .select-talla:focus {
+            border-color: #ffffff;
+        }
+
         .acciones-producto {
             display: flex;
             gap: 10px;
@@ -427,6 +459,12 @@
             gap: 2px;
         }
 
+        .item-carrito-talla {
+            color: #aaa;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+
         .btn-eliminar-item {
             background: none;
             border: none;
@@ -606,7 +644,7 @@
             
             <section class="info-principal-container" id="infoPrincipal">
                 <h2>Bienvenidos a ANØMALY</h2>
-                <p>¿Quienes somos?: Somos Anomaly, una tienda de ropa virtual donde la moda urbana se encuentra con la autenticidad. Nos enfocamos en romper con lo convencional, ofreciendo piezas únicas y personalizadas que te permiten expresar tu verdadera identidad sin decir una sola palabra. Creemos que la ropa es una extensión de tu personalidad; por eso, nos alejamos de lo masivo para crear prendas con carácter, estilo y esa actitud callejera que te hace destacar. En Anomaly, no seguimos tendencias: te ayudamos a crear las tuyas.</p>
+                <p>¿Quienes somos?: Somos Anomaly, una tienda de ropa virtual donde la moda urbana se encuentra con la autenticidad. Nos enfocamos en romper con lo unconventional, ofreciendo piezas únicas y personalizadas que te permiten expresar tu verdadera identidad sin decir una sola palabra. Creemos que la ropa es una extensión de tu personalidad; por eso, nos alejamos de lo masivo para crear prendas con carácter, estilo y esa actitud callejera que te hace destacar. En Anomaly, no seguimos tendencias: te ayudamos a crear las tuyas.</p>
                 <p>Calidad y Manufactura: En Anomaly, el estilo urbano no compite con la resistencia. Nos tomamos muy en serio cada prenda que lleva nuestro nombre, asegurando detalles técnicos de calidad textil y manufactura duradera en todo nuestro catálogo. Desde la selección de algodones de alto gramaje y fibras premium hasta costuras reforzadas de alta densidad, cada pieza está diseñada para resistir el ritmo de la calle y el paso del tiempo. No solo te llevas un diseño único y personalizado, sino una prenda estructurada, cómoda y hecha para durar.</p>
                 <p>¿Cómo comprar?: Renovar tu armario con el estilo único de Anomaly es rápido y sencillo. En nuestra plataforma web tú tienes el control absoluto de tu estilo: explora las colecciones, ajusta las unidades deseadas y procesa tu orden directa en solo unos clics. Nosotros nos encargamos de preparar tus prendas urbanas y personalizadas para que te lleguen listas para romper el molde. ¡Haz tu pedido hoy y marca la diferencia en la calle!</p>
 
@@ -620,10 +658,8 @@
                 </div>
             </section>
 
-            <!-- CONTENEDOR TIENDA -->
             <main class="tienda-container" id="tiendaContainer">
                 
-                <!-- Producto 1 -->
                 <div class="producto-card" data-id="p1" data-categoria="camisas">
                     <div class="producto-imagen">
                         <img src="imagenes/oversize-basica.png" alt="Oversize Básica">
@@ -631,26 +667,33 @@
                     <div class="producto-info">
                         <p class="producto-titulo">Oversize Básica</p>
                         <p class="producto-precio">$12.00</p>
+                        
+                        <div class="selector-talla-container">
+                            <label for="talla-p1">Talla:</label>
+                            <select id="talla-p1" class="select-talla">
+                                <option value="XS">XS</option>
+                                <option value="S">S</option>
+                                <option value="M" selected>M</option>
+                                <option value="L">L</option>
+                                <option value="XL">XL</option>
+                            </select>
+                        </div>
+
                         <div class="acciones-producto">
-                            
-                            <!-- Control Selector de Unidades Previo -->
                             <div class="selector-cantidad-previo">
                                 <button onclick="modificarContadorPrevio('p1', -1)">-</button>
                                 <span class="valor-cantidad" id="cant-previo-p1">1</span>
                                 <button onclick="modificarContadorPrevio('p1', 1)">+</button>
                             </div>
 
-                            <!-- Botón Procesar Añadir -->
                             <button class="btn-anadir-carrito" onclick="procesarAlCarrito('p1', 'Oversize Básica', 12.00)">
                                 <i class="fas fa-plus"></i> Añadir
                             </button>
-
                         </div>
                     </div>
                 </div>
                 
 
-                <!-- Producto 2 -->
                 <div class="producto-card" data-id="p2" data-categoria="camisas">
                     <div class="producto-imagen">
                         <img src="imagenes/tank-acidwash.png" alt="Tank Acidwash">
@@ -658,101 +701,62 @@
                     <div class="producto-info">
                         <p class="producto-titulo">Tank Acidwash</p>
                         <p class="producto-precio">$15.00</p>
+                        
+                        <div class="selector-talla-container">
+                            <label for="talla-p2">Talla:</label>
+                            <select id="talla-p2" class="select-talla">
+                                <option value="XS">XS</option>
+                                <option value="S">S</option>
+                                <option value="M" selected>M</option>
+                                <option value="L">L</option>
+                                <option value="XL">XL</option>
+                            </select>
+                        </div>
+
                         <div class="acciones-producto">
-                            
-                            <!-- Control Selector de Unidades Previo -->
                             <div class="selector-cantidad-previo">
                                 <button onclick="modificarContadorPrevio('p2', -1)">-</button>
                                 <span class="valor-cantidad" id="cant-previo-p2">1</span>
                                 <button onclick="modificarContadorPrevio('p2', 1)">+</button>
                             </div>
 
-                            <!-- Botón Procesar Añadir -->
                             <button class="btn-anadir-carrito" onclick="procesarAlCarrito('p2', 'Tank Acidwash', 15.00)">
                                 <i class="fas fa-plus"></i> Añadir
                             </button>
-
                         </div>
                     </div>
                 </div>        
                 
 
-                <!-- Producto 3 -->
                 <div class="producto-card" data-id="p3" data-categoria="pantalones">
                     <div class="producto-imagen">
-                        <img src="imagenes/jean-slim-dark.jpg" alt="PROXIMAMENTE">
+                        <img src="imagenes/jean-slim-dark.jpg" alt="Jeans Slim Dark">
                     </div>
                     <div class="producto-info">
-                        <p class="producto-titulo">PROXIMAMENTE</p>
-                        <p class="producto-precio">$0.00</p>
-                        <div class="acciones-producto">
-                            
-                            <!-- Control Selector de Unidades Previo -->
-                            <div class="selector-cantidad-previo">
-                                <button onclick="modificarContadorPrevio('p3', -1)">-</button>
-                                <span class="valor-cantidad" id="cant-previo-p3">1</span>
-                                <button onclick="modificarContadorPrevio('p3', 1)">+</button>
-                            </div>
-
-                            <!-- Botón Procesar Añadir -->
-                            <button class="btn-anadir-carrito" onclick="procesarAlCarrito('p3', 'PROXIMAMENTE', 0.00)">
-                                <i class="fas fa-plus"></i> Añadir
-                            </button>
-
+                        <p class="producto-titulo">Jeans Slim Dark</p>
+                        <p class="producto-precio">$20.00</p>
+                        
+                        <div class="selector-talla-container">
+                            <label for="talla-p3">Talla:</label>
+                            <select id="talla-p3" class="select-talla">
+                                <option value="XS">XS</option>
+                                <option value="S">S</option>
+                                <option value="M" selected>M</option>
+                                <option value="L">L</option>
+                                <option value="XL">XL</option>
+                            </select>
                         </div>
-                    </div>
-                </div>
 
-
-                                <!-- Producto 3 -->
-                <div class="producto-card" data-id="p3" data-categoria="pantalones">
-                    <div class="producto-imagen">
-                        <img src="imagenes/jean-slim-dark.jpg" alt="PROXIMAMENTE">
-                    </div>
-                    <div class="producto-info">
-                        <p class="producto-titulo">PROXIMAMENTE</p>
-                        <p class="producto-precio">$0.00</p>
                         <div class="acciones-producto">
-                            
-                            <!-- Control Selector de Unidades Previo -->
                             <div class="selector-cantidad-previo">
                                 <button onclick="modificarContadorPrevio('p3', -1)">-</button>
                                 <span class="valor-cantidad" id="cant-previo-p3">1</span>
                                 <button onclick="modificarContadorPrevio('p3', 1)">+</button>
                             </div>
 
-                            <!-- Botón Procesar Añadir -->
-                            <button class="btn-anadir-carrito" onclick="procesarAlCarrito('p3', 'PROXIMAMENTE', 0.00)">
+                            <button class="btn-anadir-carrito" onclick="procesarAlCarrito('p3', 'Jeans Slim Dark', 20.00)">
                                 <i class="fas fa-plus"></i> Añadir
                             </button>
-
-                        </div>
-                    </div>
-                </div>
-
-                
-                <!-- Producto 3 -->
-                <div class="producto-card" data-id="p3" data-categoria="pantalones">
-                    <div class="producto-imagen">
-                        <img src="imagenes/jean-slim-dark.jpg" alt="PROXIMAMENTE">
-                    </div>
-                    <div class="producto-info">
-                        <p class="producto-titulo">PROXIMAMENTE</p>
-                        <p class="producto-precio">$0.00</p>
-                        <div class="acciones-producto">
-                            
-                            <!-- Control Selector de Unidades Previo -->
-                            <div class="selector-cantidad-previo">
-                                <button onclick="modificarContadorPrevio('p3', -1)">-</button>
-                                <span class="valor-cantidad" id="cant-previo-p3">1</span>
-                                <button onclick="modificarContadorPrevio('p3', 1)">+</button>
-                            </div>
-
-                            <!-- Botón Procesar Añadir -->
-                            <button class="btn-anadir-carrito" onclick="procesarAlCarrito('p3', 'PROXIMAMENTE', 0.00)">
-                                <i class="fas fa-plus"></i> Añadir
-                            </button>
-
                         </div>
                     </div>
                 </div>
@@ -825,14 +829,24 @@
 
         function procesarAlCarrito(id, ExtNombre, precio) {
             const txtCant = document.getElementById(`cant-previo-${id}`);
+            const selectTalla = document.getElementById(`talla-${id}`);
+            
             const unidadesAAnadir = txtCant ? parseInt(txtCant.textContent) : 1;
+            const tallaSeleccionada = selectTalla ? selectTalla.value : 'M';
 
-            const itemExistente = carrito.find(item => item.id === id);
+            // Buscamos si ya existe el MISMO producto con la MISMA talla en el carrito
+            const itemExistente = carrito.find(item => item.id === id && item.talla === tallaSeleccionada);
 
             if (itemExistente) {
                 itemExistente.cantidad += unidadesAAnadir;
             } else {
-                carrito.push({ id: id, nombre: ExtNombre, precio: precio, cantidad: unidadesAAnadir });
+                carrito.push({ 
+                    id: id, 
+                    nombre: ExtNombre, 
+                    precio: precio, 
+                    cantidad: unidadesAAnadir,
+                    talla: tallaSeleccionada 
+                });
             }
 
             if(txtCant) txtCant.textContent = 1;
@@ -841,11 +855,13 @@
             togglePanelCarrito(true);
         }
 
-        function eliminarDelCarrito(id) {
-            carrito = carrito.filter(item => item.id !== id);
+        function eliminarDelCarrito(id, talla) {
+            // Se filtra quitando el elemento que coincida tanto en id como en talla
+            carrito = carrito.filter(item => !(item.id === id && item.talla === talla));
             actualizarInterfazCarrito();
         }
 
+        // FUNCIÓN COMPLETADA Y ARREGLADA (Renderiza los items en el carrito)
         function actualizarInterfazCarrito() {
             const listaCarrito = document.getElementById('listaCarrito');
             const totalMonto = document.getElementById('totalMonto');
@@ -872,12 +888,16 @@
                 itemDiv.className = 'item-carrito';
                 itemDiv.innerHTML = `
                     <div class="item-carrito-info">
-                        <strong>${item.nombre}</strong>
-                        <span>${item.cantidad}x - $${subtotal.toFixed(2)}</span>
+                        <span style="font-weight: 700; color: #fff;">${item.nombre}</span>
+                        <span class="item-carrito-talla">Talla: ${item.talla}</span>
+                        <span>${item.cantidad}x - $${item.precio.toFixed(2)}</span>
                     </div>
-                    <button class="btn-eliminar-item" onclick="eliminarDelCarrito('${item.id}')">
-                        <i class="fas fa-trash-alt"></i>
-                    </button>
+                    <div style="display: flex; align-items: center; gap: 10px;">
+                        <span style="font-weight: 700; color: #fff;">$${subtotal.toFixed(2)}</span>
+                        <button class="btn-eliminar-item" onclick="eliminarDelCarrito('${item.id}', '${item.talla}')">
+                            <i class="fas fa-trash-alt"></i>
+                        </button>
+                    </div>
                 `;
                 listaCarrito.appendChild(itemDiv);
             });
@@ -885,55 +905,53 @@
             totalMonto.textContent = `$${totalAcumulado.toFixed(2)}`;
         }
 
-        /* ======================================= */
-        /* PROCESAMIENTO Y LIMPIEZA DE PEDIDO      */
-        /* ======================================= */
+        // FUNCIÓN FINALIZAR PEDIDO (Envía los datos limpios y formateados por WhatsApp)
         function enviarCarritoWhatsApp() {
             const nombre = document.getElementById('checkNombre').value.trim();
             const cedula = document.getElementById('checkCedula').value.trim();
 
+            if (!nombre || !cedula) {
+                alert("Por favor, rellena tu Nombre y Cédula para procesar el pedido.");
+                return;
+            }
+
             if (carrito.length === 0) {
-                alert("El carrito está vacío. Agrega productos antes de enviar.");
+                alert("Tu carrito está vacío.");
                 return;
             }
 
-            if (nombre === "" || cedula === "") {
-                alert("Por favor, ingresa tu Nombre y Cédula para poder procesar la orden.");
-                return;
-            }
-
+            // Guardamos en LocalStorage para futuras compras
             localStorage.setItem('nombreUsuario', nombre);
             localStorage.setItem('cedulaUsuario', cedula);
 
-            const numeroTelefono = "584120743357";
-            
-            let mensajeWhatsApp = `*NUEVA ORDEN DE COMPRA - ANØMALY*\n\n`;
-            mensajeWhatsApp += `*Cliente:* ${nombre}\n`;
-            mensajeWhatsApp += `*Cédula:* ${cedula}\n\n`;
-            mensajeWhatsApp += `*Artículos en el Carrito:*\n`;
+            // Construcción del mensaje de texto para WhatsApp
+            let mensaje = `*🔥 NUEVO PEDIDO - ANØMALY 🔥*\n\n`;
+            mensaje += `👤 *Cliente:* ${nombre}\n`;
+            mensaje += `🪪 *Cédula:* ${cedula}\n`;
+            mensaje += `---------------------------------------\n\n`;
 
-            let totalOrden = 0;
-            carrito.forEach((item, index) => {
+            let total = 0;
+            carrito.forEach(item => {
                 const subtotal = item.precio * item.cantidad;
-                totalOrden += subtotal;
-                mensajeWhatsApp += `${index + 1}. _${item.nombre}_ \n`;
-                mensajeWhatsApp += `   Cant: ${item.cantidad} | Subtotal: $${subtotal.toFixed(2)}\n`;
+                total += subtotal;
+                mensaje += `📦 *${item.nombre}*\n`;
+                mensaje += `   • Talla: ${item.talla}\n`;
+                mensaje += `   • Cantidad: ${item.cantidad}\n`;
+                mensaje += `   • Subtotal: $${subtotal.toFixed(2)}\n\n`;
             });
 
-            mensajeWhatsApp += `\n*TOTAL NETO A PAGAR:* $${totalOrden.toFixed(2)}\n\n`;
-            mensajeWhatsApp += `Quedo a la espera de sus datos bancarios y formas de despacho.`;
+            mensaje += `---------------------------------------\n`;
+            mensaje += `💰 *TOTAL A PAGAR:* $${total.toFixed(2)}\n\n`;
+            mensaje += `💬 _¡Quedo atento a los datos de pago para procesar mi orden!_`;
 
-            // 1. Abrir la pestaña de WhatsApp con la información recopilada
-            window.open(`https://wa.me/${numeroTelefono}?text=${encodeURIComponent(mensajeWhatsApp)}`, '_blank');
-
-            // 2. MODIFICACIÓN: Resetear el array global del carrito de compras
-            carrito = [];
-
-            // 3. Re-renderizar la interfaz para limpiar listas y contadores visuales
-            actualizarInterfazCarrito();
-
-            // 4. Cerrar el panel lateral
-            togglePanelCarrito(false);
+            // Codificar texto para URL
+            const mensajeCodificado = encodeURIComponent(mensaje);
+            
+            // Número de la tienda configurado en tus botones de contacto
+            const numeroWhatsApp = "584120743357"; 
+            
+            // Abrir la API de WhatsApp en una pestaña nueva
+            window.open(`https://wa.me/${numeroWhatsApp}?text=${mensajeCodificado}`, '_blank');
         }
     </script>
 </body>
