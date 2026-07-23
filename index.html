@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ANØMALY</title>
+    <title>ANØMALY | Colección Oscura</title>
     <!-- CDN de Font Awesome para los Logos e Iconos -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
@@ -140,7 +140,7 @@
         }
 
         /* ============================== */
-        /* Layout de la Sección de Inicio (Dos Columnas) */
+        /* Layout de la Sección de Inicio */
         /* ============================== */
         .info-principal-container {
             background: linear-gradient(135deg, #1e1e1e 0%, #151515 100%);
@@ -157,7 +157,6 @@
             gap: 40px;
         }
 
-        /* Columna Izquierda (Textos de la Tienda) */
         .texto-bienvenida h2 {
             font-size: 2rem;
             color: #ffffff;
@@ -221,7 +220,6 @@
             box-shadow: 0 5px 15px rgba(255,255,255,0.1);
         }
 
-        /* Columna Derecha (Preguntas Frecuentes - FAQ) */
         .faq-container h2 {
             font-size: 2rem;
             color: #ffffff;
@@ -291,7 +289,6 @@
             border-top: 1px solid #202020;
         }
 
-        /* Responsive para la sección de Inicio */
         @media (max-width: 992px) {
             .inicio-grid-layout {
                 grid-template-columns: 1fr;
@@ -322,6 +319,7 @@
             transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.3s ease, border-color 0.3s ease;
             display: flex;
             flex-direction: column;
+            position: relative;
         }
 
         .producto-card:hover {
@@ -338,6 +336,7 @@
             align-items: center;
             justify-content: center;
             overflow: hidden;
+            position: relative;
         }
 
         .producto-imagen img {
@@ -345,6 +344,76 @@
             height: 100%;
             object-fit: cover;
             transition: transform 0.5s ease, opacity 0.3s ease;
+        }
+
+        .producto-card.agotado .producto-imagen img {
+            opacity: 0.35;
+            filter: grayscale(80%);
+        }
+
+        .badge-agotado {
+            position: absolute;
+            top: 15px;
+            left: 15px;
+            background: #ff4444;
+            color: #ffffff;
+            font-size: 0.75rem;
+            font-weight: 800;
+            padding: 6px 12px;
+            border-radius: 4px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            box-shadow: 0 4px 10px rgba(255,68,68,0.4);
+            z-index: 5;
+            display: none;
+        }
+
+        .producto-card.agotado .badge-agotado {
+            display: block;
+        }
+
+        .admin-prod-controls {
+            display: none;
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            z-index: 10;
+            gap: 8px;
+        }
+
+        body.admin-mode .admin-prod-controls {
+            display: flex;
+        }
+
+        .btn-admin-action {
+            background: rgba(0,0,0,0.85);
+            border: 1px solid #444;
+            color: #fff;
+            width: 34px;
+            height: 34px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            font-size: 0.85rem;
+            transition: all 0.2s ease;
+        }
+
+        .btn-admin-action:hover {
+            transform: scale(1.1);
+        }
+
+        .btn-admin-delete:hover {
+            background: #ff4444;
+            border-color: #ff4444;
+            color: #fff;
+        }
+
+        .btn-admin-toggle-stock:hover {
+            background: #ffffff;
+            border-color: #ffffff;
+            color: #000;
         }
 
         .producto-info {
@@ -368,9 +437,6 @@
             margin-bottom: 5px;
         }
 
-        /* ============================== */
-        /* Selectores */
-        /* ============================== */
         .selector-talla-container {
             display: flex;
             flex-direction: column;
@@ -470,8 +536,21 @@
             box-shadow: 0 4px 12px rgba(255,255,255,0.1);
         }
 
+        .producto-card.agotado .btn-anadir-carrito {
+            background: #252525;
+            color: #666;
+            border-color: #333;
+            cursor: not-allowed;
+            box-shadow: none;
+        }
+
+        .producto-card.agotado .selector-cantidad-previo button {
+            color: #555;
+            cursor: not-allowed;
+        }
+
         /* ============================== */
-        /* Botón Flotante Lateral */
+        /* Botón Flotante Lateral (Carrito) */
         /* ============================== */
         .btn-carrito-flotante {
             position: fixed;
@@ -659,7 +738,7 @@
             letter-spacing: 0.5px;
         }
 
-        .grupo-campo input {
+        .grupo-campo input, .grupo-campo select {
             background-color: #0c0c0c;
             border: 1px solid #333;
             color: #ffffff;
@@ -669,7 +748,7 @@
             transition: border-color 0.3s;
         }
 
-        .grupo-campo input:focus {
+        .grupo-campo input:focus, .grupo-campo select:focus {
             outline: none;
             border-color: #666;
         }
@@ -713,6 +792,109 @@
             backdrop-filter: blur(2px);
         }
 
+        /* ============================== */
+        /* Estilos Panel de Administración */
+        /* ============================== */
+        .btn-admin-flotante {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: #111;
+            color: #fff;
+            border: 1px solid #333;
+            padding: 12px 18px;
+            border-radius: 30px;
+            cursor: pointer;
+            z-index: 997;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+            transition: all 0.3s ease;
+        }
+
+        .btn-admin-flotante:hover {
+            background: #ffffff;
+            color: #000;
+        }
+
+        body.admin-mode .btn-admin-flotante {
+            background: #25d366;
+            color: #000;
+            border-color: #25d366;
+        }
+
+        .modal-admin {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.85);
+            z-index: 1001;
+            justify-content: center;
+            align-items: center;
+            backdrop-filter: blur(5px);
+        }
+
+        .modal-admin-content {
+            background: #151515;
+            border: 1px solid #333;
+            width: 90%;
+            max-width: 500px;
+            max-height: 90vh;
+            overflow-y: auto;
+            border-radius: 8px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.8);
+            position: relative;
+        }
+
+        .modal-admin-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid #333;
+            padding-bottom: 15px;
+            margin-bottom: 20px;
+        }
+
+        .modal-admin-header h2 {
+            color: #fff;
+            font-size: 1.3rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .btn-guardar-producto {
+            background: linear-gradient(135deg, #ffffff 0%, #e0e0e0 100%);
+            color: #000;
+            border: none;
+            padding: 12px;
+            font-weight: 700;
+            cursor: pointer;
+            border-radius: 4px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-top: 10px;
+            width: 100%;
+            transition: all 0.3s ease;
+        }
+
+        .btn-guardar-producto:hover {
+            background: #cccccc;
+        }
+
+        .error-msg {
+            color: #ff4444;
+            font-size: 0.85rem;
+            margin-top: 5px;
+            display: none;
+            text-align: center;
+        }
+
         footer {
             text-align: center;
             padding: 40px 20px;
@@ -751,6 +933,10 @@
             <span class="contador-carrito" id="contadorCarrito">0</span>
         </button>
 
+        <button class="btn-admin-flotante" id="btnAdminFlotante" onclick="toggleModalAdmin(true)">
+            <i class="fas fa-lock"></i> <span id="txtBtnAdmin">Panel Admin</span>
+        </button>
+
         <div class="overlay-fondo" id="overlayFondo" onclick="togglePanelCarrito(false)"></div>
 
         <aside class="panel-carrito" id="panelCarrito">
@@ -784,14 +970,81 @@
             </div>
         </aside>
 
+        <!-- Modal de Administración -->
+        <div class="modal-admin" id="modalAdmin">
+            <div class="modal-admin-content">
+                <div class="modal-admin-header">
+                    <h2 id="modalAdminTitulo">Acceso Administrador</h2>
+                    <button class="btn-cerrar-panel" onclick="toggleModalAdmin(false)">&times;</button>
+                </div>
+                
+                <form id="formLoginAdmin" onsubmit="validarLoginAdmin(event)">
+                    <div class="grupo-campo">
+                        <label for="adminUser">Usuario</label>
+                        <input type="text" id="adminUser" placeholder="Ingresa tu usuario" required>
+                    </div>
+                    <div class="grupo-campo">
+                        <label for="adminPass">Contraseña</label>
+                        <input type="password" id="adminPass" placeholder="Ingresa tu clave" required>
+                    </div>
+                    <p class="error-msg" id="loginErrorMsg">Usuario o contraseña incorrectos.</p>
+                    <button type="submit" class="btn-guardar-producto">Iniciar Sesión</button>
+                </form>
+
+                <form id="formNuevoProducto" style="display: none;" onsubmit="agregarNuevoProducto(event)">
+                    <div class="grupo-campo">
+                        <label for="adminTitulo">Nombre del Producto</label>
+                        <input type="text" id="adminTitulo" placeholder="Ej. Oversize Negra" required>
+                    </div>
+                    <div class="grupo-campo">
+                        <label for="adminPrecio">Precio ($)</label>
+                        <input type="number" step="0.01" id="adminPrecio" placeholder="12.00" required>
+                    </div>
+                    <div class="grupo-campo">
+                        <label for="adminCategoria">Categoría</label>
+                        <select id="adminCategoria" required>
+                            <option value="camisas">Camisas</option>
+                            <option value="accesorios">Accesorios</option>
+                            <option value="perfumes">Perfumes</option>
+                        </select>
+                    </div>
+
+                    <!-- NUEVO CAMPO: Selector de Tallas Si / No -->
+                    <div class="grupo-campo">
+                        <label for="adminTallas">¿Usa Tallas?</label>
+                        <select id="adminTallas" required>
+                            <option value="si">Sí (XS, S, M, L, XL)</option>
+                            <option value="no">No (Talla Única / Sin Talla)</option>
+                        </select>
+                    </div>
+
+                    <div class="grupo-campo">
+                        <label for="adminEstado">Estado del Producto</label>
+                        <select id="adminEstado" required>
+                            <option value="disponible">Disponible</option>
+                            <option value="agotado">Agotado</option>
+                        </select>
+                    </div>
+                    <div class="grupo-campo">
+                        <label for="adminImagenFile">Imagen (Subir Archivo Local)</label>
+                        <input type="file" id="adminImagenFile" accept="image/*" onchange="convertirImagenABase64(event)">
+                    </div>
+                    <div class="grupo-campo">
+                        <label for="adminImagenUrl">O URL de la Imagen</label>
+                        <input type="text" id="adminImagenUrl" placeholder="https://ejemplo.com/imagen.jpg">
+                    </div>
+                    <button type="submit" class="btn-guardar-producto">Guardar Producto</button>
+                    <button type="button" class="btn-guardar-producto" style="background: #ff4444; color: #fff; margin-top: 8px;" onclick="cerrarSesionAdmin()">Cerrar Sesión</button>
+                </form>
+            </div>
+        </div>
+
         <div class="layout-principal">
             <div class="contenido-izquierdo">
                 
-                <!-- Sección de Inicio Modificada con Grid de Dos Columnas -->
                 <section class="info-principal-container" id="infoPrincipal">
                     <div class="inicio-grid-layout">
                         
-                        <!-- Columna Izquierda: Identidad de Marca -->
                         <div class="texto-bienvenida">
                             <h2>Bienvenidos a ANØMALY</h2>
                             <p><strong>¿Quiénes somos?:</strong> Somos Anomaly, una tienda de ropa virtual donde la moda urbana se encuentra con la autenticidad. Nos enfocamos en romper con lo unconventional, ofreciendo piezas únicas y personalizadas que te permiten expresar tu verdadera identidad sin decir una sola palabra. Creemos que la ropa es una extensión de tu personalidad; por eso, nos alejamos de lo masivo para crear prendas con carácter, estilo y esa actitud callejera que te hace destacar. En Anomaly, no seguimos tendencias: te ayudamos a crear las tuyas.</p>
@@ -808,7 +1061,6 @@
                             </div>
                         </div>
 
-                        <!-- Columna Derecha: Layout de Preguntas Frecuentes -->
                         <div class="faq-container">
                             <h2>Preguntas Frecuentes</h2>
                             
@@ -835,7 +1087,7 @@
                             <div class="faq-item">
                                 <button class="faq-header" onclick="toggleFaq(this)">
                                     ¿Puedo personalizar una prenda?
-                                    <div class="icon-holder"><i class="fas fa-chevron-down"></i></div>
+                                    <i class="fas fa-chevron-down"></i>
                                 </button>
                                 <div class="faq-content">
                                     <p>¡Claro! En Anomaly nos especializamos en prendas con carácter único. Puedes coordinar con nosotros por WhatsApp detalles específicos para estampados o ajustes especiales en las piezas que lo permitan.</p>
@@ -848,7 +1100,7 @@
                                     <i class="fas fa-chevron-down"></i>
                                 </button>
                                 <div class="faq-content">
-                                    <p>Utilizamos algodones de alto gramaje (Heavy Cotton) y fibras premium con costuras reforzadas de alta densidad. Priorizamos que cada prenda mantenga su estructura urbana, sea cómoda y altamente duradera.</p>
+                                    <p>Utilizamos algodones de alto gramaje (Heavy Cotton) y fibras premium con costuras reinforced de alta densidad. Priorizamos que cada prenda mantenga su estructura urbana, sea cómoda y highly duradera.</p>
                                 </div>
                             </div>
 
@@ -868,361 +1120,404 @@
                 </section>
 
                 <main class="tienda-container" id="tiendaContainer">
-                    
-                    <!-- Producto 1 -->
-                    <div class="producto-card" data-id="p1" data-categoria="camisas">
-                        <div class="producto-imagen">
-                            <img src="imagenes/oversize-basica.png" 
-                                 data-hover="imagenes/oversize-basica-hover.png" 
-                                 alt="Oversize Básica" 
-                                 class="img-dinamica">
-                        </div>
-                        <div class="producto-info">
-                            <p class="producto-titulo">Oversize Básica</p>
-                            <p class="producto-precio">$12.00</p>
-                            
-                            <div class="selector-talla-container">
-                                <label for="talla-p1">Talla:</label>
-                                <select id="talla-p1" class="select-talla">
-                                    <option value="XS">XS</option>
-                                    <option value="S">S</option>
-                                    <option value="M" selected>M</option>
-                                    <option value="L">L</option>
-                                    <option value="XL">XL</option>
-                                </select>
-                            </div>
-
-                            <div class="acciones-producto">
-                                <div class="selector-cantidad-previo">
-                                    <button onclick="modificarContadorPrevio('p1', -1)">-</button>
-                                    <span class="valor-cantidad" id="cant-previo-p1">1</span>
-                                    <button onclick="modificarContadorPrevio('p1', 1)">+</button>
-                                </div>
-                                <button class="btn-anadir-carrito" onclick="procesarAlCarrito('p1', 'Oversize Básica', 12.00)">
-                                    <i class="fas fa-plus"></i> Añadir
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <!-- Producto 2 -->
-                    <div class="producto-card" data-id="p2" data-categoria="camisas">
-                        <div class="producto-imagen">
-                            <img src="imagenes/tank-acidwash.png" 
-                                 data-hover="imagenes/tank-acidwash-hover.png" 
-                                 alt="Tank Acidwash" 
-                                 class="img-dinamica">
-                        </div>
-                        <div class="producto-info">
-                            <p class="producto-titulo">Tank Acidwash</p>
-                            <p class="producto-precio">$15.00</p>
-                            
-                            <div class="selector-talla-container">
-                                <label for="talla-p2">Talla:</label>
-                                <select id="talla-p2" class="select-talla">
-                                    <option value="XS">XS</option>
-                                    <option value="S">S</option>
-                                    <option value="M" selected>M</option>
-                                    <option value="L">L</option>
-                                    <option value="XL">XL</option>
-                                </select>
-                            </div>
-
-                            <div class="acciones-producto">
-                                <div class="selector-cantidad-previo">
-                                    <button onclick="modificarContadorPrevio('p2', -1)">-</button>
-                                    <span class="valor-cantidad" id="cant-previo-p2">1</span>
-                                    <button onclick="modificarContadorPrevio('p2', 1)">+</button>
-                                </div>
-                                <button class="btn-anadir-carrito" onclick="procesarAlCarrito('p2', 'Tank Acidwash', 15.00)">
-                                    <i class="fas fa-plus"></i> Añadir
-                                </button>
-                            </div>
-                        </div>
-                    </div>        
-                    
-                    <!-- Producto 3 -->
-                    <div class="producto-card" data-id="p3" data-categoria="accesorios">
-                        <div class="producto-imagen">
-                            <img src="imagenes/jean-slim-dark.jpg" 
-                                 data-hover="imagenes/jean-slim-dark-hover.jpg" 
-                                 alt="Jeans Slim Dark" 
-                                 class="img-dinamica">
-                        </div>
-                        <div class="producto-info">
-                            <p class="producto-titulo">Jeans Slim Dark</p>
-                            <p class="producto-precio">$20.00</p>
-                            
-                            <div class="selector-talla-container">
-                                <label for="talla-p3">Talla:</label>
-                                <select id="talla-p3" class="select-talla">
-                                    <option value="XS">XS</option>
-                                    <option value="S">S</option>
-                                    <option value="M" selected>M</option>
-                                    <option value="L">L</option>
-                                    <option value="XL">XL</option>
-                                </select>
-                            </div>
-
-                            <div class="acciones-producto">
-                                <div class="selector-cantidad-previo">
-                                    <button onclick="modificarContadorPrevio('p3', -1)">-</button>
-                                    <span class="valor-cantidad" id="cant-previo-p3">1</span>
-                                    <button onclick="modificarContadorPrevio('p3', 1)">+</button>
-                                </div>
-                                <button class="btn-anadir-carrito" onclick="procesarAlCarrito('p3', 'Jeans Slim Dark', 20.00)">
-                                    <i class="fas fa-plus"></i> Añadir
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-
+                    <!-- Los productos se cargan dinámicamente -->
                 </main>
             </div>
         </div>
 
         <footer>
-            <p>&copy; 2026 ANØMALY - Black Collection. Todos los derechos reservados.</p>
+            <p>&copy; 2026 ANØMALY | Todos los derechos reservados.</p>
         </footer>
     </div>
 
-    <!-- ============================================== -->
-    <!-- LÓGICA DE JAVASCRIPT -->
-    <!-- ============================================== -->
+    <!-- Scripts de Funcionalidad y Persistencia -->
     <script>
-        // --- VARIABLES DEL CARRITO ---
+        const USUARIO_ADMIN = "admin";
+        const CLAVE_ADMIN = "anomaly2026";
+        let adminAutenticado = false;
+
         let carrito = [];
-        
-        // --- COMPONENTES DOM ---
-        const infoPrincipal = document.getElementById('infoPrincipal');
-        const tiendaContainer = document.getElementById('tiendaContainer');
-        const panelCarrito = document.getElementById('panelCarrito');
-        const overlayFondo = document.getElementById('overlayFondo');
-        const dropdownMenu = document.getElementById('dropdownMenu');
-        const txtDropdownSeleccionado = document.getElementById('txtDropdownSeleccionado');
+        let imagenBase64Temporal = "";
 
-        window.addEventListener('DOMContentLoaded', () => {
-            inicializarEfectoHover(); 
-        });
-
-        // --- SISTEMA DESPLEGABLE PARA LAS PREGUNTAS FRECUENTES ---
-        function toggleFaq(button) {
-            const itemActual = button.parentElement;
-            
-            // Cerrar otras preguntas abiertas para mantener el orden (opcional)
-            document.querySelectorAll('.faq-item').forEach(item => {
-                if (item !== itemActual) {
-                    item.classList.remove('abierto');
-                }
-            });
-
-            // Conmutar el estado del ítem clickeado
-            itemActual.classList.toggle('abierto');
-        }
-
-        // --- FUNCIÓN PARA EL EFECTO DE HOVER DE LAS IMÁGENES ---
-        function inicializarEfectoHover() {
-            const imagenesDinamicas = document.querySelectorAll('.img-dinamica');
-            
-            imagenesDinamicas.forEach(img => {
-                const imgOriginal = img.src;
-                const imgHover = img.getAttribute('data-hover');
-                
-                if (imgHover) {
-                    img.addEventListener('mouseenter', () => {
-                        img.style.opacity = '0'; 
-                        setTimeout(() => {
-                            img.src = imgHover;
-                            img.style.opacity = '1';
-                        }, 150);
-                    });
-
-                    img.addEventListener('mouseleave', () => {
-                        img.style.opacity = '0';
-                        setTimeout(() => {
-                            img.src = imgOriginal;
-                            img.style.opacity = '1';
-                        }, 150);
-                    });
-                }
-            });
-        }
-
-        // --- SISTEMA DE TIENDA Y CARRITO ---
-        window.addEventListener('click', (e) => {
-            if (dropdownMenu && !dropdownMenu.contains(e.target)) {
-                dropdownMenu.classList.remove('abierto');
+        const productosIniciales = [
+            {
+                id: 'p1',
+                titulo: 'Oversize Básica',
+                precio: 12.00,
+                categoria: 'camisas',
+                tieneTallas: true,
+                estado: 'disponible',
+                imagen: 'imagenes/oversize-basica.png'
             }
-        });
+        ];
 
-        function toggleDropdown(event) {
-            event.stopPropagation();
-            dropdownMenu.classList.toggle('abierto');
-        }
+        let productosBase = [];
 
-        function togglePanelCarrito(abrir) {
-            if (abrir) {
-                panelCarrito.classList.add('abierto');
-                overlayFondo.style.display = 'block';
+        document.addEventListener('DOMContentLoaded', () => {
+            const guardados = localStorage.getItem('anomaly_productos');
+            if (guardados) {
+                productosBase = JSON.parse(guardados);
             } else {
-                panelCarrito.classList.remove('abierto');
-                overlayFondo.style.display = 'none';
+                productosBase = productosIniciales;
+                guardarEnLocalStorage();
             }
+            renderizarProductos();
+        });
+
+        function guardarEnLocalStorage() {
+            localStorage.setItem('anomaly_productos', JSON.stringify(productosBase));
         }
 
-        function filtrar(categoria, elementoBoton) {
-            const botones = document.querySelectorAll('.btn-opcion-categoria');
-            botones.forEach(btn => btn.classList.remove('activo'));
-            elementoBoton.classList.add('activo');
+        function renderizarProductos() {
+            const tiendaContainer = document.getElementById('tiendaContainer');
+            tiendaContainer.innerHTML = '';
+
+            productosBase.forEach(prod => {
+                const card = document.createElement('div');
+                card.className = `producto-card ${prod.estado === 'agotado' ? 'agotado' : ''}`;
+                card.dataset.id = prod.id;
+                card.dataset.categoria = prod.categoria;
+                card.dataset.estado = prod.estado;
+
+                // Verificamos si tiene tallas (o por defecto true para no romper los previos)
+                const usaTallas = prod.tieneTallas !== undefined ? prod.tieneTallas : true;
+
+                // Construimos la sección del selector de tallas si aplica
+                const htmlTallas = usaTallas ? `
+                    <div class="selector-talla-container">
+                        <label for="talla-${prod.id}">Talla:</label>
+                        <select id="talla-${prod.id}" class="select-talla">
+                            <option value="XS">XS</option>
+                            <option value="S">S</option>
+                            <option value="M" selected>M</option>
+                            <option value="L">L</option>
+                            <option value="XL">XL</option>
+                        </select>
+                    </div>
+                ` : '';
+
+                card.innerHTML = `
+                    <div class="admin-prod-controls">
+                        <button class="btn-admin-action btn-admin-toggle-stock" title="Cambiar Disponibilidad" onclick="cambiarEstadoStock('${prod.id}')">
+                            <i class="fas fa-boxes"></i>
+                        </button>
+                        <button class="btn-admin-action btn-admin-delete" title="Eliminar Producto" onclick="eliminarProducto('${prod.id}')">
+                            <i class="fas fa-trash-alt"></i>
+                        </button>
+                    </div>
+
+                    <div class="producto-imagen">
+                        <span class="badge-agotado">Agotado</span>
+                        <img src="${prod.imagen}" alt="${prod.titulo}" class="img-dinamica" onerror="this.src='https://via.placeholder.com/350x350/1a1a1a/ffffff?text=ANØMALY'">
+                    </div>
+                    <div class="producto-info">
+                        <p class="producto-titulo">${prod.titulo}</p>
+                        <p class="producto-precio">$${parseFloat(prod.precio).toFixed(2)}</p>
+                        
+                        ${htmlTallas}
+
+                        <div class="acciones-producto">
+                            <div class="selector-cantidad-previo">
+                                <button onclick="modificarContadorPrevio('${prod.id}', -1)">-</button>
+                                <span class="valor-cantidad" id="cant-previo-${prod.id}">1</span>
+                                <button onclick="modificarContadorPrevio('${prod.id}', 1)">+</button>
+                            </div>
+                            <button class="btn-anadir-carrito" id="btn-anadir-${prod.id}" onclick="agregarAlCarrito('${prod.id}', '${prod.titulo}', ${prod.precio})">
+                                <i class="fas fa-shopping-bag"></i> <span class="txt-btn-anadir">${prod.estado === 'agotado' ? 'Agotado' : 'Añadir'}</span>
+                            </button>
+                        </div>
+                    </div>
+                `;
+                tiendaContainer.appendChild(card);
+            });
+        }
+
+        function toggleDropdown(e) {
+            e.stopPropagation();
+            document.getElementById('dropdownMenu').classList.toggle('abierto');
+        }
+
+        document.addEventListener('click', () => {
+            const dropdown = document.getElementById('dropdownMenu');
+            if (dropdown) dropdown.classList.remove('abierto');
+        });
+
+        function toggleFaq(btn) {
+            const item = btn.parentElement;
+            item.classList.toggle('abierto');
+        }
+
+        function filtrar(categoria, btn) {
+            const infoPrincipal = document.getElementById('infoPrincipal');
+            const tiendaContainer = document.getElementById('tiendaContainer');
+            const txtDropdown = document.getElementById('txtDropdownSeleccionado');
             
-            txtDropdownSeleccionado.textContent = elementoBoton.textContent;
-            dropdownMenu.classList.remove('abierto');
-            
+            document.querySelectorAll('.btn-opcion-categoria').forEach(b => b.classList.remove('activo'));
+            btn.classList.add('activo');
+            txtDropdown.innerText = btn.innerText;
+
             if (categoria === 'inicio') {
                 infoPrincipal.style.display = 'block';
                 tiendaContainer.style.display = 'none';
             } else {
                 infoPrincipal.style.display = 'none';
                 tiendaContainer.style.display = 'grid';
-                
+
                 const productos = document.querySelectorAll('.producto-card');
-                productos.forEach(p => {
-                    const cat = p.getAttribute('data-categoria');
-                    p.style.display = (categoria === 'todos' || cat === categoria) ? 'flex' : 'none';
+                productos.forEach(prod => {
+                    if (categoria === 'todos' || prod.dataset.categoria === categoria) {
+                        prod.style.display = 'flex';
+                    } else {
+                        prod.style.display = 'none';
+                    }
                 });
             }
         }
 
-        // --- MANEJO DE CANTIDADES Y CARRITO ---
         function modificarContadorPrevio(id, cambio) {
-            const txtCant = document.getElementById(`cant-previo-${id}`);
-            if (!txtCant) return;
+            const prod = productosBase.find(p => p.id === id);
+            if (prod && prod.estado === 'agotado') return;
 
-            let cantidadActual = parseInt(txtCant.textContent);
-            cantidadActual += cambio;
-
-            if (cantidadActual < 1) cantidadActual = 1;
-            txtCant.textContent = cantidadActual;
+            const el = document.getElementById('cant-previo-' + id);
+            let val = parseInt(el.innerText) + cambio;
+            if (val < 1) val = 1;
+            el.innerText = val;
         }
 
-        function procesarAlCarrito(id, ExtNombre, precio) {
-            const txtCant = document.getElementById(`cant-previo-${id}`);
-            const selectTalla = document.getElementById(`talla-${id}`);
-            
-            const unidadesAAnadir = txtCant ? parseInt(txtCant.textContent) : 1;
-            const tallaSeleccionada = selectTalla ? selectTalla.value : 'M';
-
-            const itemExistente = carrito.find(item => item.id === id && item.talla === tallaSeleccionada);
-
-            if (itemExistente) {
-                itemExistente.cantidad += unidadesAAnadir;
-            } else {
-                carrito.push({ 
-                    id: id, 
-                    nombre: ExtNombre, 
-                    precio: precio, 
-                    cantidad: unidadesAAnadir,
-                    talla: tallaSeleccionada 
-                });
+        function agregarAlCarrito(id, titulo, precio) {
+            const prod = productosBase.find(p => p.id === id);
+            if (prod && prod.estado === 'agotado') {
+                alert('Este producto se encuentra agotado actualmente.');
+                return;
             }
 
-            if(txtCant) txtCant.textContent = 1;
+            // Detectamos si el selector de tallas existe en el DOM
+            const selectTallaEl = document.getElementById('talla-' + id);
+            const talla = selectTallaEl ? selectTallaEl.value : 'Única';
 
-            actualizarInterfazCarrito();
+            const cantidad = parseInt(document.getElementById('cant-previo-' + id).innerText);
+
+            const existente = carrito.find(item => item.id === id && item.talla === talla);
+            if (existente) {
+                existente.cantidad += cantidad;
+            } else {
+                carrito.push({ id, titulo, precio, talla, cantidad });
+            }
+
+            actualizarCarritoUI();
             togglePanelCarrito(true);
         }
 
-        function eliminarDelCarrito(id, talla) {
-            carrito = carrito.filter(item => !(item.id === id && item.talla === talla));
-            actualizarInterfazCarrito();
-        }
+        function actualizarCarritoUI() {
+            const lista = document.getElementById('listaCarrito');
+            const totalEl = document.getElementById('totalMonto');
+            const contadorEl = document.getElementById('contadorCarrito');
 
-        function actualizarInterfazCarrito() {
-            const listaCarrito = document.getElementById('listaCarrito');
-            const totalMonto = document.getElementById('totalMonto');
-            const contadorCarrito = document.getElementById('contadorCarrito');
-            
-            listaCarrito.innerHTML = "";
+            lista.innerHTML = '';
+            let total = 0;
+            let totalItems = 0;
 
             if (carrito.length === 0) {
-                listaCarrito.innerHTML = '<p class="carrito-vacio-txt">Tu carrito está vacío.</p>';
-                totalMonto.textContent = "$0.00";
-                contadorCarrito.textContent = "0";
-                return;
+                lista.innerHTML = '<p class="carrito-vacio-txt">Tu carrito está vacío.</p>';
+            } else {
+                carrito.forEach((item, index) => {
+                    const subtotal = item.precio * item.cantidad;
+                    total += subtotal;
+                    totalItems += item.cantidad;
+
+                    const textoTalla = item.talla !== 'Única' ? `Talla: ${item.talla} | ` : '';
+
+                    lista.innerHTML += `
+                        <div class="item-carrito">
+                            <div class="item-carrito-info">
+                                <strong>${item.titulo}</strong>
+                                <span class="item-carrito-talla">${textoTalla}Cantidad: ${item.cantidad}</span>
+                                <span>$${subtotal.toFixed(2)}</span>
+                            </div>
+                            <button class="btn-eliminar-item" onclick="eliminarItem(${index})">
+                                <i class="fas fa-trash"></i>
+                            </button>
+                        </div>
+                    `;
+                });
             }
 
-            let totalUnidades = 0;
-            let totalPrecio = 0;
+            totalEl.innerText = '$' + total.toFixed(2);
+            contadorEl.innerText = totalItems;
+        }
 
-            carrito.forEach(item => {
-                totalUnidades += item.cantidad;
-                totalPrecio += (item.precio * item.cantidad);
+        function eliminarItem(index) {
+            carrito.splice(index, 1);
+            actualizarCarritoUI();
+        }
 
-                const divItem = document.createElement('div');
-                divItem.className = 'item-carrito';
-                divItem.innerHTML = `
-                    <div class="item-carrito-info">
-                        <strong>${item.nombre}</strong>
-                        <span class="item-carrito-talla">Talla: ${item.talla} | Cant: ${item.cantidad}</span>
-                        <span>$${(item.precio * item.cantidad).toFixed(2)}</span>
-                    </div>
-                    <button class="btn-eliminar-item" onclick="eliminarDelCarrito('${item.id}', '${item.talla}')">
-                        <i class="fas fa-trash-alt"></i>
-                    </button>
-                `;
-                listaCarrito.appendChild(divItem);
-            });
-
-            totalMonto.textContent = `$${totalPrecio.toFixed(2)}`;
-            contadorCarrito.textContent = totalUnidades;
+        function togglePanelCarrito(abrir) {
+            const panel = document.getElementById('panelCarrito');
+            const overlay = document.getElementById('overlayFondo');
+            if (abrir) {
+                panel.classList.add('abierto');
+                overlay.style.display = 'block';
+            } else {
+                panel.classList.remove('abierto');
+                overlay.style.display = 'none';
+            }
         }
 
         function enviarCarritoWhatsApp() {
-            const nombre = document.getElementById('checkNombre').value.trim();
-            const cedula = document.getElementById('checkCedula').value.trim();
+            if (carrito.length === 0) {
+                alert('El carrito está vacío.');
+                return;
+            }
+
+            const nombre = document.getElementById('checkNombre').value;
+            const cedula = document.getElementById('checkCedula').value;
 
             if (!nombre || !cedula) {
-                alert("Por favor, ingresa tu Nombre y tu Cédula para finalizar tu pedido.");
+                alert('Por favor, completa tu nombre y cédula para continuar.');
                 return;
             }
 
-            if (carrito.length === 0) {
-                alert("Tu carrito está vacío. Agrega algunos productos antes de comprar.");
-                return;
-            }
-
-            const numeroTelefono = "584120743357"; 
-            
-            let mensaje = `🚨 *NUEVA ORDEN - ANØMALY* 🚨\n\n`;
-            mensaje += `👤 *Cliente:* ${nombre}\n`;
-            mensaje += `🆔 *Cédula:* ${cedula}\n`;
-            mensaje += `=========================\n\n`;
-            mensaje += `🛒 *Detalle del Pedido:*\n`;
+            let mensaje = `*NUEVO PEDIDO ANØMALY*\n`;
+            mensaje += `*Cliente:* ${nombre}\n`;
+            mensaje += `*Cédula:* ${cedula}\n\n`;
+            mensaje += `*Detalle de compra:*\n`;
 
             let total = 0;
             carrito.forEach(item => {
                 const subtotal = item.precio * item.cantidad;
                 total += subtotal;
-                mensaje += `▪️ *${item.nombre}* (${item.talla})\n`;
-                mensaje += `   Cant: ${item.cantidad} x $${item.precio.toFixed(2)} | *Subtotal: $${subtotal.toFixed(2)}*\n\n`;
+                const detalleTalla = item.talla !== 'Única' ? ` (Talla: ${item.talla})` : '';
+                mensaje += `- ${item.titulo}${detalleTalla} x${item.cantidad} = $${subtotal.toFixed(2)}\n`;
             });
 
-            mensaje += `=========================\n`;
-            mensaje += `💰 *TOTAL A PAGAR:* $${total.toFixed(2)}\n\n`;
-            mensaje += `👉 Quedo a la espera de los detalles de pago. ¡Gracias!`;
+            mensaje += `\n*Total a pagar:* $${total.toFixed(2)}`;
 
-            const mensajeEncriptado = encodeURIComponent(mensaje);
-            const urlWhatsApp = `https://wa.me/${numeroTelefono}?text=${mensajeEncriptado}`;
+            const url = `https://wa.me/584120743357?text=${encodeURIComponent(mensaje)}`;
+            window.open(url, '_blank');
 
-            window.open(urlWhatsApp, '_blank');
-
-            // --- VACIAR EL CARRITO Y RESETEAR INTERFAZ ---
             carrito = [];
-            actualizarInterfazCarrito();
-            
-            document.getElementById('checkNombre').value = "";
-            document.getElementById('checkCedula').value = "";
+            actualizarCarritoUI();
             togglePanelCarrito(false);
+            document.getElementById('checkNombre').value = '';
+            document.getElementById('checkCedula').value = '';
+        }
+
+        /* Funciones de Administración */
+        function toggleModalAdmin(abrir) {
+            const modal = document.getElementById('modalAdmin');
+            modal.style.display = abrir ? 'flex' : 'none';
+
+            if (abrir) {
+                actualizarVistaModalAdmin();
+            }
+        }
+
+        function actualizarVistaModalAdmin() {
+            const formLogin = document.getElementById('formLoginAdmin');
+            const formProducto = document.getElementById('formNuevoProducto');
+            const titulo = document.getElementById('modalAdminTitulo');
+            const errorMsg = document.getElementById('loginErrorMsg');
+            const txtBtnAdmin = document.getElementById('txtBtnAdmin');
+
+            errorMsg.style.display = 'none';
+
+            if (adminAutenticado) {
+                formLogin.style.display = 'none';
+                formProducto.style.display = 'block';
+                titulo.innerText = 'Añadir Nuevo Producto';
+                txtBtnAdmin.innerText = 'Modo Admin';
+                document.body.classList.add('admin-mode');
+            } else {
+                formLogin.style.display = 'block';
+                formProducto.style.display = 'none';
+                titulo.innerText = 'Acceso Administrador';
+                txtBtnAdmin.innerText = 'Panel Admin';
+                document.body.classList.remove('admin-mode');
+            }
+        }
+
+        function validarLoginAdmin(event) {
+            event.preventDefault();
+            const user = document.getElementById('adminUser').value;
+            const pass = document.getElementById('adminPass').value;
+            const errorMsg = document.getElementById('loginErrorMsg');
+
+            if (user === USUARIO_ADMIN && pass === CLAVE_ADMIN) {
+                adminAutenticado = true;
+                document.getElementById('formLoginAdmin').reset();
+                actualizarVistaModalAdmin();
+            } else {
+                errorMsg.style.display = 'block';
+            }
+        }
+
+        function cerrarSesionAdmin() {
+            adminAutenticado = false;
+            actualizarVistaModalAdmin();
+            toggleModalAdmin(false);
+            alert('Sesión de administrador cerrada.');
+        }
+
+        function cambiarEstadoStock(id) {
+            const prod = productosBase.find(p => p.id === id);
+            if (prod) {
+                prod.estado = prod.estado === 'disponible' ? 'agotado' : 'disponible';
+                guardarEnLocalStorage();
+                renderizarProductos();
+            }
+        }
+
+        function eliminarProducto(id) {
+            if (confirm('¿Estás seguro de que deseas eliminar este producto de la tienda?')) {
+                productosBase = productosBase.filter(p => p.id !== id);
+                guardarEnLocalStorage();
+                renderizarProductos();
+            }
+        }
+
+        function convertirImagenABase64(event) {
+            const archivo = event.target.files[0];
+            if (archivo) {
+                const lector = new FileReader();
+                lector.onload = function(e) {
+                    imagenBase64Temporal = e.target.result;
+                };
+                lector.readAsDataURL(archivo);
+            }
+        }
+
+        function agregarNuevoProducto(event) {
+            event.preventDefault();
+
+            const titulo = document.getElementById('adminTitulo').value;
+            const precio = parseFloat(document.getElementById('adminPrecio').value);
+            const categoria = document.getElementById('adminCategoria').value;
+            const tieneTallas = document.getElementById('adminTallas').value === 'si';
+            const estado = document.getElementById('adminEstado').value;
+            const urlImagen = document.getElementById('adminImagenUrl').value;
+
+            let srcFinal = imagenBase64Temporal || urlImagen || 'https://via.placeholder.com/350x350/1a1a1a/ffffff?text=ANØMALY';
+
+            const nuevoProducto = {
+                id: 'p_' + Date.now(),
+                titulo,
+                precio,
+                categoria,
+                tieneTallas,
+                estado,
+                imagen: srcFinal
+            };
+
+            productosBase.push(nuevoProducto);
+            guardarEnLocalStorage();
+            renderizarProductos();
+
+            // Limpiar Formulario
+            document.getElementById('formNuevoProducto').reset();
+            imagenBase64Temporal = "";
+            toggleModalAdmin(false);
+
+            alert('Producto añadido con éxito.');
         }
     </script>
 </body>
